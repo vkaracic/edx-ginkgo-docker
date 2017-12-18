@@ -1,4 +1,4 @@
-OPENEDX_RELEASE = 'open-release/ginkgo.1'
+OPENEDX_RELEASE = 'open-release/ginkgo.master'
 DEVSTACK_WORKSPACE ?= $(shell pwd)
 
 OS := $(shell uname)
@@ -7,10 +7,10 @@ export OPENEDX_RELEASE
 export DEVSTACK_WORKSPACE
 
 build.base:
-	docker build -t vkaracic/xenial-base:ginkgo.1 build/xenial-base
+	docker build -t karacic/xenial-base:ginkgo.master build/xenial-base
 
 build.edxapp:
-	docker build -t vkaracic/edxapp:ginkgo.1 build/edxapp
+	docker build -t karacic/edxapp:ginkgo.master build/edxapp
 
 clone:
 	./clone-repos.sh
@@ -20,3 +20,7 @@ provision:
 
 up:
 	docker-compose -f docker-compose.yml -f docker-compose-host.yml up
+
+static:
+	docker-compose exec lms bash -c 'source /edx/app/edxapp/edxapp_env && cd /edx/app/edxapp/edx-platform && paver update_assets --settings devstack_docker'
+	docker-compose exec studio bash -c 'source /edx/app/edxapp/edxapp_env && cd /edx/app/edxapp/edx-platform && paver update_assets --settings devstack_docker'

@@ -10,5 +10,5 @@ cd ${DEVSTACK_WORKSPACE}
 
 for repo in ${repos[*]}
 do
-    git clone --branch open-release/ginkgo.1 $repo
+    git clone --branch open-release/ginkgo.master $repo
 done

@@ -46,10 +46,6 @@ docker-compose exec lms bash -c 'source /edx/app/edxapp/edxapp_env && cd /edx/ap
 echo -e "${GREEN}Restarting LMS ${NC}"
 docker-compose restart lms
 
-# For some reason `dm.xmlsec.binding` package is broken and needs to be reinstalled.
-# @TODO fix this package in the edxapp image
-docker-compose exec lms bash -c 'source /edx/app/edxapp/edxapp_env && pip uninstall -y dm.xmlsec.binding'
-
 echo -e "${GREEN} Run edxapp migrations first since they are needed for the service users and OAuth clients ${NC}"
 docker-compose exec lms bash -c 'source /edx/app/edxapp/edxapp_env && cd /edx/app/edxapp/edx-platform && paver update_db --settings devstack_docker'
 

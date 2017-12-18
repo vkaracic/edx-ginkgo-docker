@@ -1,4 +1,4 @@
-FROM vkaracic/xenial-base:ginkgo.1
+FROM karacic/xenial-base:ginkgo.master
 USER root
 CMD ["/edx/app/supervisor/venvs/supervisor/bin/supervisord", "-n", "--configuration", "/edx/app/supervisor/supervisord.conf"]
 
