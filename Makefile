@@ -19,7 +19,7 @@ provision:
 	./provision.sh
 
 up:
-	docker-compose -f docker-compose.yml -f docker-compose-host.yml up
+	docker-compose -f docker-compose.yml -f docker-compose-host.yml up -d
 
 static:
 	docker-compose exec lms bash -c 'source /edx/app/edxapp/edxapp_env && cd /edx/app/edxapp/edx-platform && paver update_assets --settings devstack_docker'
