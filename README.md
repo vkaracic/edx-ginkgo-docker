@@ -7,6 +7,7 @@ A dockerized version of Open edX running `open-release/ginkgo.master` version.
 ```
 docker (version 17.09 or higher)
 docker-compose (version 1.17.1 or higher)
+```
 
 ### Installation
 
@@ -21,6 +22,10 @@ Run the following commands in order:
 
 Note: if you want to build your own images rename `karacic/<image_name>` with `<username>/<image_name>`
 in the Makefile.
+
+### Troubleshooting
+
+In case the CSS is missing in either LMS or Studio, you can run `make static` to rebuild the static assets for both.
 
 ### Bug reporting
 
