@@ -19,4 +19,4 @@ provision:
 	./provision.sh
 
 up:
-	docker-compose -f docker-compose.yml up
+	docker-compose -f docker-compose.yml -f docker-compose-host.yml up

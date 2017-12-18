@@ -4,11 +4,9 @@ set -e
 set -o pipefail
 set -x
 
-apps=( lms studio )
 
 GREEN='\033[0;32m'
 NC='\033[0m' # No Color
-
 
 # Bring the databases online.
 docker-compose up -d mysql mongo
@@ -38,9 +36,8 @@ docker exec -i edx.devstack.mysql mysql -uroot edxapp_csmh < data/edxapp_csmh.sq
 
 # Bring edxapp containers online
 echo -e "${GREEN}Bringing containers online${NC}"
-for app in "${apps[@]}"; do
-    docker-compose $DOCKER_COMPOSE_FILES up -d $app
-done
+docker-compose $DOCKER_COMPOSE_FILES up -d lms
+docker-compose $DOCKER_COMPOSE_FILES up -d studio
 
 echo -e "${GREEN}Installing prereqs ${NC}"
 docker-compose exec lms bash -c 'source /edx/app/edxapp/edxapp_env && cd /edx/app/edxapp/edx-platform && NO_PYTHON_UNINSTALL=1 paver install_prereqs'
@@ -63,10 +60,8 @@ docker-compose exec lms bash -c 'source /edx/app/edxapp/edxapp_env && echo "from
 echo -e "${GREEN} Create demo course and users ${NC}"
 docker-compose exec lms bash -c '/edx/app/edx_ansible/venvs/edx_ansible/bin/ansible-playbook /edx/app/edx_ansible/edx_ansible/playbooks/edx-east/demo.yml -v -c local -i "127.0.0.1," --extra-vars="COMMON_EDXAPP_SETTINGS=devstack_docker"'
 
-echo -e "${GREEN} Create static assets for both LMS and Studio ${NC}"
-for app in "${apps[@]}"; do
-    docker-compose exec $app bash -c 'source /edx/app/edxapp/edxapp_env && cd /edx/app/edxapp/edx-platform && paver update_assets --settings devstack_docker'
-done
+docker-compose exec lms bash -c 'source /edx/app/edxapp/edxapp_env && cd /edx/app/edxapp/edx-platform && paver update_assets --settings devstack_docker'
+docker-compose exec studio bash -c 'source /edx/app/edxapp/edxapp_env && cd /edx/app/edxapp/edx-platform && paver update_assets --settings devstack_docker'
 
 echo -e "${GREEN}FINISHED !!!${NC}"
 
