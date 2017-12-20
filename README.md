@@ -11,17 +11,19 @@ docker-compose (version 1.17.1 or higher)
 
 ### Installation
 
-Run the following commands in order:
+If you want to build your own images rename `karacic/<image_name>` with `<username>/<image_name>`
+in the Makefile and run these commands:
 
 1. `make build.base`
 2. `make build.edxapp`
-3. `make clone`
-4. `make provision`
-5. `docker-compose stop`
-6. `make up`
 
-Note: if you want to build your own images rename `karacic/<image_name>` with `<username>/<image_name>`
-in the Makefile.
+If you want to use the existing ones run these commands to install the containers:
+
+1. `make clone`
+2. `make provision`
+3. `docker-compose stop`
+4. `make up`
+
 
 ### Troubleshooting
 
