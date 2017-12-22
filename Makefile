@@ -1,5 +1,5 @@
 OPENEDX_RELEASE = 'open-release/ginkgo.master'
-DEVSTACK_WORKSPACE ?= $(shell pwd)
+DEVSTACK_WORKSPACE ?= $(shell pwd)/..
 
 OS := $(shell uname)
 

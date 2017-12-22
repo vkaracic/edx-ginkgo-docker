@@ -24,6 +24,11 @@ If you want to use the existing ones run these commands to install the container
 3. `docker-compose stop`
 4. `make up`
 
+### Theming
+
+You will notice that a new `edx-themes` directory has been created next to the cloned `edx-platform` directory.
+That directory is mapped to `/edx-themes` in the LMS and Studio containers. With that information continue following
+[these instruction](http://edx.readthedocs.io/projects/edx-installing-configuring-and-running/en/open-release-ginkgo.master/configuration/changing_appearance/theming/enable_themes.html) on how to apply a new theme.
 
 ### Troubleshooting
 
