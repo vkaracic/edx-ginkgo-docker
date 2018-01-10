@@ -14,3 +14,4 @@ do
 done
 
 mkdir edx-themes
+mkdir src
