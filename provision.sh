@@ -41,13 +41,15 @@ docker-compose -f docker-compose.yml -f docker-compose-host.yml up -d studio
 
 echo -e "${GREEN}Installing prereqs ${NC}"
 docker-compose exec lms bash -c 'source /edx/app/edxapp/edxapp_env && cd /edx/app/edxapp/edx-platform && NO_PYTHON_UNINSTALL=1 paver install_prereqs'
+docker-compose exec studio bash -c 'source /edx/app/edxapp/edxapp_env && cd /edx/app/edxapp/edx-platform && NO_PYTHON_UNINSTALL=1 paver install_prereqs'
 
 # Installing prereqs crashes the process
-echo -e "${GREEN}Restarting LMS ${NC}"
-docker-compose restart lms
+echo -e "${GREEN}Restarting LMS Studio${NC}"
+docker-compose restart lms studio
 
 echo -e "${GREEN} Run edxapp migrations first since they are needed for the service users and OAuth clients ${NC}"
 docker-compose exec lms bash -c 'source /edx/app/edxapp/edxapp_env && cd /edx/app/edxapp/edx-platform && paver update_db --settings devstack_docker'
+docker-compose exec studio bash -c 'source /edx/app/edxapp/edxapp_env && cd /edx/app/edxapp/edx-platform && paver update_db --settings devstack_docker'
 
 echo -e "${GREEN} Create a superuser for edxapp ${NC}"
 docker-compose exec lms bash -c 'source /edx/app/edxapp/edxapp_env && python /edx/app/edxapp/edx-platform/manage.py lms --settings=devstack_docker manage_user edx edx@example.com --superuser --staff'
