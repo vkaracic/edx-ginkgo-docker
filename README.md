@@ -37,7 +37,7 @@ The provision step will create a new `.env` file that contains the `CONTAINER_PR
 
 ### After installation
 
-In your `edx-platform` folder search for `edx.devstack.` term. Change those instance with your `CONTAINER_PREFIX` value. Most of them are related to tests which you can skip if you don't intend to run tests.
+In your `edx-platform` folder search for `edx.devstack.` term. Change those instance with your `CONTAINER_PREFIX` value (for example: `edx.devstack.lms -> my_project.lms`). Most of them are related to tests which you can skip if you don't intend to run tests.
 
 ## Theming
 
