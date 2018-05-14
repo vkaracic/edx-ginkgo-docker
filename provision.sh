@@ -8,6 +8,11 @@ set -x
 GREEN='\033[0;32m'
 NC='\033[0m' # No Color
 
+if [ -z ${CONTAINER_PREFIX} ]; then
+  echo "Must set the CONTAINER_PREFIX environment variable!"
+  exit 1
+fi
+
 echo -e "${GREEN}Creating .env file...${NC}"
 cat > .env << EOF
 CONTAINER_PREFIX=${CONTAINER_PREFIX}
