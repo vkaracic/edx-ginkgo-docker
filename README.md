@@ -26,18 +26,21 @@ If you haven't renamed the image in the Makefile file, the edxapp image will be 
 
 ### Installation
 
+Installation steps:
+
 1. `make build.base`
 2. `make build.edxapp`
 3. `make clone`
+
+In your `edx-platform` folder search for `edx.devstack.` term. Change those instance with your `CONTAINER_PREFIX` value. Most of them are related to tests which you can skip if you don't intend to run tests.
+
+Installation steps continued:
+
 4. `make provision`
 5. `docker-compose stop`
 6. `make up`
 
 The provision step will create a new `.env` file that contains the `CONTAINER_PREFIX` variable so that you don't need to export it every time you start up the containers.
-
-### After installation
-
-In your `edx-platform` folder search for `edx.devstack.` term. Change those instance with your `CONTAINER_PREFIX` value (for example: `edx.devstack.lms -> my_project.lms`). Most of them are related to tests which you can skip if you don't intend to run tests.
 
 ## Theming
 
