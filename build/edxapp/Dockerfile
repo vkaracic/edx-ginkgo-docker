@@ -10,11 +10,13 @@ COPY ansible_overrides.yml /
 COPY devstack.yml /
 COPY devstack-ansible_overrides.yml /devstack/ansible_overrides.yml
 
+ARG container_prefix
 ARG OPENEDX_RELEASE=master
 ENV OPENEDX_RELEASE=${OPENEDX_RELEASE}
 RUN sudo /edx/app/edx_ansible/venvs/edx_ansible/bin/ansible-playbook edxapp.yml \
     -c local -i '127.0.0.1,' \
     -t 'install,assets,devstack' \
+    --extra-vars=container_prefix=container_prefix \
     --extra-vars=edx_platform_version="open-release/ginkgo.master" \
     --extra-vars="@/ansible_overrides.yml" \
     --extra-vars="@/devstack.yml" \

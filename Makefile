@@ -10,7 +10,7 @@ build.base:
 	docker build -t karacic/xenial-base:ginkgo.master build/xenial-base
 
 build.edxapp:
-	docker build -t karacic/edxapp:ginkgo.master build/edxapp
+	docker build --build-arg container_prefix=${CONTAINER_PREFIX} -t karacic/edxapp:${CONTAINER_PREFIX}-ginkgo.master build/edxapp
 
 clone:
 	./clone-repos.sh

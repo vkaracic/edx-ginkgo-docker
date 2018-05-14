@@ -1,9 +1,9 @@
 ---
 EDXAPP_SETTINGS: 'devstack_docker'
-EDXAPP_MEMCACHE: ['edx.devstack.memcached:11211']
-EDXAPP_MYSQL_HOST: "edx.devstack.mysql"
+EDXAPP_MEMCACHE: ['{{container_prefix}}.memcached:11211']
+EDXAPP_MYSQL_HOST: "{{container_prefix}}.mysql"
 EDXAPP_MONGO_HOSTS:
-  - "edx.devstack.mongo"
+  - "{{container_prefix}}.mongo"
 
 devstack: true
 migrate_db: false
@@ -14,8 +14,8 @@ EDXAPP_LMS_GUNICORN_EXTRA_CONF: 'reload = True'
 
 EDXAPP_NO_PREREQ_INSTALL: 0
 COMMON_SSH_PASSWORD_AUTH: "yes"
-EDXAPP_LMS_BASE: "edx.devstack.lms:18000"
-EDXAPP_CMS_BASE: "edx.devstack.studio:18010"
+EDXAPP_LMS_BASE: "{{container_prefix}}.lms:18000"
+EDXAPP_CMS_BASE: "{{container_prefix}}.studio:18010"
 EDXAPP_OAUTH_ENFORCE_SECURE: false
 EDXAPP_LMS_BASE_SCHEME: http
 COMMON_SECURITY_UPDATES: true
@@ -23,7 +23,7 @@ SECURITY_UPGRADE_ON_ANSIBLE: true
 
 EDXAPP_INSTALL_PRIVATE_REQUIREMENTS: true
 
-EDXAPP_SEARCH_HOST: 'edx.devstack.elasticsearch'
+EDXAPP_SEARCH_HOST: '{{container_prefix}}.elasticsearch'
 
 EDXAPP_PYTHON_SANDBOX: false
 
@@ -33,5 +33,5 @@ edxapp_debian_pkgs_extra:
 
 edxapp_environment_extra:
   SELENIUM_BROWSER: 'firefox'
-  SELENIUM_HOST: 'edx.devstack.firefox'
+  SELENIUM_HOST: '{{container_prefix}}.firefox'
   SELENIUM_PORT: '4444'

@@ -8,12 +8,17 @@ set -x
 GREEN='\033[0;32m'
 NC='\033[0m' # No Color
 
+echo -e "${GREEN}Creating .env file...${NC}"
+cat > .env << EOF
+CONTAINER_PREFIX=${CONTAINER_PREFIX}
+EOF
+
 # Bring the databases online.
 docker-compose up -d mysql mongo
 
 # Ensure the MySQL server is online and usable
 echo "Waiting for MySQL"
-until docker exec -i edx.devstack.mysql mysql -uroot -se "SELECT EXISTS(SELECT 1 FROM mysql.user WHERE user = 'root')" &> /dev/null
+until docker exec -i ${CONTAINER_PREFIX}.mysql mysql -uroot -se "SELECT EXISTS(SELECT 1 FROM mysql.user WHERE user = 'root')" &> /dev/null
 do
   printf "."
   sleep 1
@@ -26,13 +31,13 @@ sleep 20
 echo -e "MySQL ready"
 
 echo -e "${GREEN}Creating databases and users...${NC}"
-docker exec -i edx.devstack.mysql mysql -uroot mysql < data/provision.sql
-docker exec -i edx.devstack.mongo mongo < data/mongo-provision.js
+docker exec -i ${CONTAINER_PREFIX}.mysql mysql -uroot mysql < data/provision.sql
+docker exec -i ${CONTAINER_PREFIX}.mongo mongo < data/mongo-provision.js
 
 # Load databases
 echo -e "${GREEN}Loading databases...${NC}"
-docker exec -i edx.devstack.mysql mysql -uroot edxapp < data/edxapp.sql
-docker exec -i edx.devstack.mysql mysql -uroot edxapp_csmh < data/edxapp_csmh.sql
+docker exec -i ${CONTAINER_PREFIX}.mysql mysql -uroot edxapp < data/edxapp.sql
+docker exec -i ${CONTAINER_PREFIX}.mysql mysql -uroot edxapp_csmh < data/edxapp_csmh.sql
 
 # Bring edxapp containers online
 echo -e "${GREEN}Bringing containers online${NC}"
@@ -64,3 +69,4 @@ docker-compose exec studio bash -c 'source /edx/app/edxapp/edxapp_env && cd /edx
 echo -e "${GREEN}FINISHED !!!${NC}"
 
 docker-compose -f docker-compose.yml -f docker-compose-host.yml up -d studio
+

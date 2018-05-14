@@ -2,7 +2,7 @@ version: "2.1"
 
 services:
   memcached:
-    container_name: edx.devstack.memcached
+    container_name: ${CONTAINER_PREFIX}.memcached
     image: memcached:1.4.24
     # ports:
     #   - "11211:11211"
@@ -12,7 +12,7 @@ services:
     # to conserve disk space, and disable the journal for a minor performance gain.
     # See https://docs.mongodb.com/v3.0/reference/program/mongod/#options for complete details.
     command: mongod --smallfiles --nojournal --storageEngine wiredTiger
-    container_name: edx.devstack.mongo
+    container_name: ${CONTAINER_PREFIX}.mongo
     image: mongo:3.2.16
     # ports:
     #  - "27017:27017"
@@ -21,7 +21,7 @@ services:
 
   mysql:
     command: mysqld --character-set-server=utf8 --collation-server=utf8_general_ci
-    container_name: edx.devstack.mysql
+    container_name: ${CONTAINER_PREFIX}.mysql
     environment:
       MYSQL_ROOT_PASSWORD: ""
       MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
@@ -33,7 +33,7 @@ services:
 
   lms:
     command: bash -c 'source /edx/app/edxapp/edxapp_env && while true; do python /edx/app/edxapp/edx-platform/manage.py lms runserver 0.0.0.0:18000 --settings devstack_docker; sleep 2; done'
-    container_name: edx.devstack.lms
+    container_name: ${CONTAINER_PREFIX}.lms
     depends_on:
       - mysql
       - memcached
@@ -42,12 +42,12 @@ services:
     stdin_open: true
     tty: true
     environment:
-      BOK_CHOY_HOSTNAME: edx.devstack.lms
+      BOK_CHOY_HOSTNAME: ${CONTAINER_PREFIX}.lms
       BOK_CHOY_LMS_PORT: 18003
       BOK_CHOY_CMS_PORT: 18031
-      EDXAPP_TEST_MONGO_HOST: edx.devstack.mongo
+      EDXAPP_TEST_MONGO_HOST: ${CONTAINER_PREFIX}.mongo
       NO_PYTHON_UNINSTALL: 1
-    image: karacic/edxapp:ginkgo.master
+    image: karacic/edxapp:${CONTAINER_PREFIX}-ginkgo.master
     ports:
       - "18000:18000"
       - "19876:19876" # JS test debugging
@@ -58,7 +58,7 @@ services:
 
   studio:
     command: bash -c 'source /edx/app/edxapp/edxapp_env && while true; do python /edx/app/edxapp/edx-platform/manage.py cms runserver 0.0.0.0:18010 --settings devstack_docker; sleep 2; done'
-    container_name: edx.devstack.studio
+    container_name: ${CONTAINER_PREFIX}.studio
     depends_on:
       - mysql
       - memcached
@@ -67,12 +67,12 @@ services:
     stdin_open: true
     tty: true
     environment:
-      BOK_CHOY_HOSTNAME: edx.devstack.studio
+      BOK_CHOY_HOSTNAME: ${CONTAINER_PREFIX}.studio
       BOK_CHOY_LMS_PORT: 18103
       BOK_CHOY_CMS_PORT: 18131
-      EDXAPP_TEST_MONGO_HOST: edx.devstack.mongo
+      EDXAPP_TEST_MONGO_HOST: ${CONTAINER_PREFIX}.mongo
       NO_PYTHON_UNINSTALL: 1
-    image: karacic/edxapp:ginkgo.master
+    image: karacic/edxapp:${CONTAINER_PREFIX}-ginkgo.master
     ports:
       - "18010:18010"
       - "19877:19877" # JS test debugging
