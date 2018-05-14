@@ -11,6 +11,7 @@ NC='\033[0m' # No Color
 echo -e "${GREEN}Creating .env file...${NC}"
 cat > .env << EOF
 CONTAINER_PREFIX=${CONTAINER_PREFIX}
+COMPOSE_PROJECT_NAME=${CONTAINER_PREFIX}
 EOF
 
 # Bring the databases online.
