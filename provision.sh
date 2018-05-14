@@ -72,6 +72,10 @@ docker-compose exec lms bash -c '/edx/app/edx_ansible/venvs/edx_ansible/bin/ansi
 docker-compose exec lms bash -c 'source /edx/app/edxapp/edxapp_env && cd /edx/app/edxapp/edx-platform && paver update_assets --settings devstack_docker'
 docker-compose exec studio bash -c 'source /edx/app/edxapp/edxapp_env && cd /edx/app/edxapp/edx-platform && paver update_assets --settings devstack_docker'
 
+echo -e "${GREEN} Installing nano ${NC}"
+docker-compose exec lms bash -c 'sudo apt-get install -y nano'
+docker-compose exec studio bash -c 'sudo apt-get install -y nano'
+
 echo -e "${GREEN}FINISHED !!!${NC}"
 
 docker-compose -f docker-compose.yml -f docker-compose-host.yml up -d studio
