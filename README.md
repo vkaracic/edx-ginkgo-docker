@@ -42,12 +42,6 @@ Installation steps continued:
 
 The provision step will create a new `.env` file that contains the `CONTAINER_PREFIX` and `COMPOSE_PROJECT_NAME` variables so that you don't need to export it every time you start up the containers.
 
-## Theming
-
-You will notice that a new `edx-themes` directory has been created next to the cloned `edx-platform` directory.
-That directory is mapped to `/edx-themes` in the LMS and Studio containers. With that information continue following
-[these instruction](http://edx.readthedocs.io/projects/edx-installing-configuring-and-running/en/open-release-ginkgo.master/configuration/changing_appearance/theming/enable_themes.html) on how to apply a new theme.
-
 ## Troubleshooting
 
 In case the CSS is missing in either LMS or Studio, you can run `make static` to rebuild the static assets for both.
