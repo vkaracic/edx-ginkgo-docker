@@ -19,7 +19,7 @@ Export the `CONTAINER_PREFIX` environment variable to differentiate container be
 
 If you want to build your own images rename `karacic/<image_name>` with `<username>/<image_name>`.
 
-Now your edxapp image will be named `<username>/<CONTAINER_PREFIX-ginkgo.master`.
+Now your edxapp image will be named `<username>/<CONTAINER_PREFIX>-ginkgo.master`.
 If you haven't renamed the image in the Makefile file, the edxapp image will be named `karacic/<CONTAINER_PREFIX>-ginkgo.master`.
 
 **IMPORTANT:** if you already have a set of devstack containers that you are working with on a different project, rename the volumes in `doker-compose.yml` to something unique, otherwise both projects use the same volumes and override each other.
