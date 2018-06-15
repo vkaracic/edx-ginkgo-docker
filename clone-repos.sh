@@ -4,6 +4,7 @@ set -e
 
 repos=(
     "https://github.com/edx/edx-platform.git"
+    "https://github.com/edx/cs_comments_service.git"
 )
 
 cd ${DEVSTACK_WORKSPACE}

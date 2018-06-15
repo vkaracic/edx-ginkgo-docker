@@ -1,3 +1,6 @@
+-include .env
+export
+
 OPENEDX_RELEASE = 'open-release/ginkgo.master'
 DEVSTACK_WORKSPACE ?= $(shell pwd)/..
 
@@ -11,6 +14,12 @@ build.base:
 
 build.edxapp:
 	docker build --build-arg container_prefix=${CONTAINER_PREFIX} -t karacic/edxapp:${CONTAINER_PREFIX}-ginkgo.master build/edxapp
+
+build.elasticsearch:
+	docker build -t karacic/elasticsearch:${CONTAINER_PREFIX}-ginkgo.master build/elasticsearch
+
+build.forum:
+	docker build --build-arg container_prefix=${CONTAINER_PREFIX} -t karacic/forum:${CONTAINER_PREFIX}-ginkgo.master build/forum
 
 clone:
 	./clone-repos.sh

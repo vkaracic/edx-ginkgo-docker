@@ -9,8 +9,8 @@ GREEN='\033[0;32m'
 NC='\033[0m' # No Color
 
 if [ -z ${CONTAINER_PREFIX} ]; then
-  echo "Must set the CONTAINER_PREFIX environment variable!"
-  exit 1
+  export CONTAINER_PREFIX='edx'
+  echo "Defaulting CONTAINER_PREFIX to edx"
 fi
 
 echo -e "${GREEN}Creating .env file...${NC}"
@@ -76,7 +76,8 @@ echo -e "${GREEN} Installing nano ${NC}"
 docker-compose exec lms bash -c 'sudo apt-get install -y nano'
 docker-compose exec studio bash -c 'sudo apt-get install -y nano'
 
+docker-compose -f docker-compose.yml -f docker-compose-host.yml up -d studio
+docker-compose -f docker-compose.yml -f docker-compose-host.yml up -d forum
 echo -e "${GREEN}FINISHED !!!${NC}"
 
-docker-compose -f docker-compose.yml -f docker-compose-host.yml up -d studio
 

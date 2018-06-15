@@ -1,0 +1,13 @@
+---
+
+FLOCK_TLD: "edx"
+
+FORUM_MONGO_HOSTS:
+  - "{{container_prefix}}.mongo"
+
+FORUM_ELASTICSEARCH_HOST: "{{container_prefix}}.elasticsearch"
+FORUM_USE_TCP: "true"
+FORUM_RACK_ENV: "staging"
+FORUM_SINATRA_ENV: "staging"
+
+devstack: "true"
