@@ -7,6 +7,16 @@ services:
     # ports:
     #   - "11211:11211"
 
+  elasticsearch:
+    container_name: ${CONTAINER_PREFIX}.elasticsearch
+    image: karacic/elasticsearch:${CONTAINER_PREFIX}-ginkgo.master
+    # ports:
+    #   - "9200:9200"
+    #   - "9300:9300"
+    volumes:
+      - elasticsearch_data:/usr/share/elasticsearch/data
+      - elasticsearch_data:/usr/share/elasticsearch/logs
+
   mongo:
     # We use WiredTiger in all environments. In development environments we use small files
     # to conserve disk space, and disable the journal for a minor performance gain.
@@ -81,9 +91,21 @@ services:
     volumes:
       - edxapp_studio_assets:/edx/var/edxapp/staticfiles/
 
+  forum:
+    command: bash -c 'source /edx/app/forum/ruby_env && source /edx/app/forum/forum_env && cd /edx/app/forum/cs_comments_service && bundle install && while true; do ruby app.rb -o 0.0.0.0 ; sleep 2; done'
+    container_name: ${CONTAINER_PREFIX}.forum
+    depends_on:
+      - mongo
+      - memcached
+      - elasticsearch
+    image: karacic/forum:${CONTAINER_PREFIX}-ginkgo.master
+    ports:
+      - "18080:4567"
+
 
 volumes:
   edxapp_lms_assets:
   edxapp_studio_assets:
   mongo_data:
   mysql_data:
+  elasticsearch_data:

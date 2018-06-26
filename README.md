@@ -1,6 +1,6 @@
 # edx-ginkgo-docker
 A dockerized version of Open edX running `open-release/ginkgo.master` version.
-(Only LMS and Studio for now)
+(Only LMS, Studio and Forum for now)
 
 ## Requirements:
 
@@ -13,7 +13,7 @@ docker-compose (version 1.17.1 or higher)
 
 ### Before installation
 
-Export the `CONTAINER_PREFIX` environment variable to differentiate container between projects:
+Export the `CONTAINER_PREFIX` environment variable to differentiate container between projects (default is `edx`):
 
 `export CONTAINER_PREFIX=<project_name>`
 
@@ -22,25 +22,25 @@ If you want to build your own images rename `karacic/<image_name>` with `<userna
 Now your edxapp image will be named `<username>/<CONTAINER_PREFIX>-ginkgo.master`.
 If you haven't renamed the image in the Makefile file, the edxapp image will be named `karacic/<CONTAINER_PREFIX>-ginkgo.master`.
 
-**IMPORTANT:** if you already have a set of devstack containers that you are working with on a different project, rename the volumes in `doker-compose.yml` to something unique, otherwise both projects use the same volumes and override each other.
-
 ### Installation
 
 Installation steps:
 
 1. `make build.base`
 2. `make build.edxapp`
-3. `make clone`
+3. `make build.elasticsearch`
+4. `make build.forum`
+5. `make clone`
 
 In your `edx-platform` folder search for `edx.devstack.` term. Change those instance with your `CONTAINER_PREFIX` value. Most of them are related to tests which you can skip if you don't intend to run tests.
 
 Installation steps continued:
 
-4. `make provision`
-5. `docker-compose stop`
-6. `make up`
+6. `make provision`
+7. `docker-compose stop`
+8. `make up`
 
-The provision step will create a new `.env` file that contains the `CONTAINER_PREFIX` variable so that you don't need to export it every time you start up the containers.
+The provision step will create a new `.env` file that contains the `CONTAINER_PREFIX` and `COMPOSE_PROJECT_NAME` variables so that you don't need to export it every time you start up the containers.
 
 ## Theming
 
