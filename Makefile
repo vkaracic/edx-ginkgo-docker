@@ -39,3 +39,9 @@ static-lms:
 
 watch:
 	docker-compose exec lms bash -c 'source /edx/app/edxapp/edxapp_env && cd /edx/app/edxapp/edx-platform && paver watch_assets --td=/edx/app/edxapp/edx-platform/themes --t=ed2go-edx-theme --system=lms'
+
+migrations:
+	docker-compose exec lms bash -c 'source /edx/app/edxapp/edxapp_env && cd /edx/app/edxapp/edx-platform && python manage.py lms makemigrations --settings=devstack_docker'
+
+migrate:
+	docker-compose exec lms bash -c 'source /edx/app/edxapp/edxapp_env && cd /edx/app/edxapp/edx-platform && python manage.py lms migrate --settings=devstack_docker'
