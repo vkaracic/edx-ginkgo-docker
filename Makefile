@@ -45,3 +45,8 @@ migrations:
 
 migrate:
 	docker-compose exec lms bash -c 'source /edx/app/edxapp/edxapp_env && cd /edx/app/edxapp/edx-platform && python manage.py lms migrate --settings=devstack_docker'
+
+test:
+	docker-compose exec lms bash -c 'source /edx/app/edxapp/edxapp_env && cd /edx/app/edxapp/edx-platform && paver test_system -t lms/djangoapps/ed2go --settings=test_ed2go'
+
+
